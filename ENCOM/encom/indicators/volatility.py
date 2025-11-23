@@ -16,6 +16,26 @@ except ImportError:
     NUMBA_AVAILABLE = False
 
 
+# Helper function for EMA calculation (used by Keltner Channels)
+@njit(cache=True)
+def _ema_helper(values, period):
+    """EMA helper for Keltner Channels to avoid circular import"""
+    period = int(period)  # Ensure period is integer
+    n = len(values)
+    ema = np.zeros(n)
+
+    if n == 0:
+        return ema
+
+    ema[0] = values[0]
+    alpha = 2.0 / (period + 1)
+
+    for i in range(1, n):
+        ema[i] = alpha * values[i] + (1 - alpha) * ema[i-1]
+
+    return ema
+
+
 @njit(cache=True)
 def atr_nb(high, low, close, period=14):
     """
@@ -32,6 +52,7 @@ def atr_nb(high, low, close, period=14):
 
     Speed: ~40x faster than pandas implementation
     """
+    period = int(period)  # Ensure period is integer for array indexing
     n = len(close)
     atr = np.zeros(n)
 
@@ -80,6 +101,7 @@ def bollinger_bands_nb(close, period=20, std_dev=2.0):
 
     Speed: ~30x faster than pandas implementation
     """
+    period = int(period)  # Ensure period is integer for array indexing
     n = len(close)
     middle = np.zeros(n)
     upper = np.zeros(n)
@@ -118,6 +140,7 @@ def std_dev_nb(values, period):
     Returns:
         Standard deviation values
     """
+    period = int(period)  # Ensure period is integer for array indexing
     n = len(values)
     std = np.zeros(n)
 
@@ -149,12 +172,12 @@ def keltner_channels_nb(high, low, close, ema_period=20, atr_period=10, atr_mult
     Returns:
         Tuple of (middle, upper, lower)
     """
-    from encom.indicators.momentum import ema_nb
-
+    ema_period = int(ema_period)  # Ensure periods are integers
+    atr_period = int(atr_period)
     n = len(close)
 
-    # Middle line (EMA of close)
-    middle = ema_nb(close, ema_period)
+    # Middle line (EMA of close using local helper)
+    middle = _ema_helper(close, ema_period)
 
     # ATR
     atr = atr_nb(high, low, close, atr_period)
