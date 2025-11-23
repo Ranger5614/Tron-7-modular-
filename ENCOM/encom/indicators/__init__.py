@@ -108,6 +108,27 @@ from encom.indicators.advanced_volume import (
     negative_volume_index_nb, positive_volume_index_nb
 )
 
+from encom.indicators.candlestick_patterns import (
+    shooting_star, piercing_dark_cloud, harami, marubozu, spinning_top, three_inside, tweezer,
+    shooting_star_nb, piercing_dark_cloud_nb, harami_nb, marubozu_nb, spinning_top_nb, three_inside_nb, tweezer_nb
+)
+
+from encom.indicators.oscillators import (
+    stochastic_rsi, relative_vigor_index, psychological_line, aroon_oscillator,
+    commodity_selection_index, detrended_oscillator, trend_intensity_index, momentum_oscillator,
+    rate_of_change_ratio, smoothed_rate_of_change, intraday_momentum_index,
+    stochastic_rsi_nb, relative_vigor_index_nb, psychological_line_nb, aroon_oscillator_nb,
+    commodity_selection_index_nb, detrended_oscillator_nb, trend_intensity_index_nb, momentum_oscillator_nb,
+    rate_of_change_ratio_nb, smoothed_rate_of_change_nb, intraday_momentum_index_nb
+)
+
+from encom.indicators.bands_channels import (
+    envelope, starc_bands, price_channel_bands, median_price_bands,
+    typical_price_bands, weighted_close_bands, acceleration_bands, high_low_bands,
+    envelope_nb, starc_bands_nb, price_channel_bands_nb, median_price_bands_nb,
+    typical_price_bands_nb, weighted_close_bands_nb, acceleration_bands_nb, high_low_bands_nb
+)
+
 __all__ = [
     # Momentum indicators
     "rsi", "macd", "ema", "sma", "stochastic",
@@ -175,4 +196,22 @@ __all__ = [
     # Advanced Volume indicators
     "volume_roc_adv", "klinger_volume_oscillator", "ease_of_movement", "negative_volume_index", "positive_volume_index",
     "volume_roc_adv_nb", "klinger_volume_oscillator_nb", "ease_of_movement_nb", "negative_volume_index_nb", "positive_volume_index_nb",
+
+    # Candlestick Patterns (Extended)
+    "shooting_star", "piercing_dark_cloud", "harami", "marubozu", "spinning_top", "three_inside", "tweezer",
+    "shooting_star_nb", "piercing_dark_cloud_nb", "harami_nb", "marubozu_nb", "spinning_top_nb", "three_inside_nb", "tweezer_nb",
+
+    # Oscillators (Extended)
+    "stochastic_rsi", "relative_vigor_index", "psychological_line", "aroon_oscillator",
+    "commodity_selection_index", "detrended_oscillator", "trend_intensity_index", "momentum_oscillator",
+    "rate_of_change_ratio", "smoothed_rate_of_change", "intraday_momentum_index",
+    "stochastic_rsi_nb", "relative_vigor_index_nb", "psychological_line_nb", "aroon_oscillator_nb",
+    "commodity_selection_index_nb", "detrended_oscillator_nb", "trend_intensity_index_nb", "momentum_oscillator_nb",
+    "rate_of_change_ratio_nb", "smoothed_rate_of_change_nb", "intraday_momentum_index_nb",
+
+    # Bands & Channels
+    "envelope", "starc_bands", "price_channel_bands", "median_price_bands",
+    "typical_price_bands", "weighted_close_bands", "acceleration_bands", "high_low_bands",
+    "envelope_nb", "starc_bands_nb", "price_channel_bands_nb", "median_price_bands_nb",
+    "typical_price_bands_nb", "weighted_close_bands_nb", "acceleration_bands_nb", "high_low_bands_nb",
 ]
