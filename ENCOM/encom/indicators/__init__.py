@@ -52,6 +52,20 @@ from encom.indicators.overlap import (
     trima_nb, midpoint_nb, midprice_nb
 )
 
+from encom.indicators.statistical import (
+    correlation, covariance, beta, variance, skewness, kurtosis, zscore,
+    linear_regression, linear_regression_slope, linear_regression_angle,
+    linear_regression_intercept, tsf, standard_error,
+    correlation_nb, covariance_nb, beta_nb, variance_nb, skewness_nb, kurtosis_nb, zscore_nb,
+    linear_regression_nb, linear_regression_slope_nb, linear_regression_angle_nb,
+    linear_regression_intercept_nb, tsf_nb, standard_error_nb
+)
+
+from encom.indicators.price_transform import (
+    avgprice, medprice, typprice, wclprice, hlc3, ohlc4, hl2, hlcc4,
+    avgprice_nb, medprice_nb, typprice_nb, wclprice_nb, hlc3_nb, ohlc4_nb, hl2_nb, hlcc4_nb
+)
+
 __all__ = [
     # Momentum indicators
     "rsi", "macd", "ema", "sma", "stochastic",
@@ -75,4 +89,16 @@ __all__ = [
     "wma", "hma", "kama", "dema", "tema", "t3", "zlema", "vwma", "trima", "midpoint", "midprice",
     "wma_nb", "hma_nb", "kama_nb", "dema_nb", "tema_nb", "t3_nb", "zlema_nb", "vwma_nb",
     "trima_nb", "midpoint_nb", "midprice_nb",
+
+    # Statistical/Regression indicators
+    "correlation", "covariance", "beta", "variance", "skewness", "kurtosis", "zscore",
+    "linear_regression", "linear_regression_slope", "linear_regression_angle",
+    "linear_regression_intercept", "tsf", "standard_error",
+    "correlation_nb", "covariance_nb", "beta_nb", "variance_nb", "skewness_nb", "kurtosis_nb", "zscore_nb",
+    "linear_regression_nb", "linear_regression_slope_nb", "linear_regression_angle_nb",
+    "linear_regression_intercept_nb", "tsf_nb", "standard_error_nb",
+
+    # Price Transform indicators
+    "avgprice", "medprice", "typprice", "wclprice", "hlc3", "ohlc4", "hl2", "hlcc4",
+    "avgprice_nb", "medprice_nb", "typprice_nb", "wclprice_nb", "hlc3_nb", "ohlc4_nb", "hl2_nb", "hlcc4_nb",
 ]
