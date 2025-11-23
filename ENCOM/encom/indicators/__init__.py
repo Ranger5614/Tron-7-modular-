@@ -129,6 +129,19 @@ from encom.indicators.bands_channels import (
     typical_price_bands_nb, weighted_close_bands_nb, acceleration_bands_nb, high_low_bands_nb
 )
 
+from encom.indicators.composite import (
+    choppiness_index, mcginley_dynamic, kaufman_efficiency_ratio, vertical_horizontal_filter,
+    linear_regression_bands, price_oscillator, force_index, elder_force_index,
+    chande_forecast_oscillator, center_of_gravity, linear_weighted_ma, variable_ma,
+    triangular_ma, std_dev_channels, ease_of_movement_value,
+    relative_momentum_index, qstick_indicator, volatility_ratio, market_facilitation_index,
+    choppiness_index_nb, mcginley_dynamic_nb, kaufman_efficiency_ratio_nb, vertical_horizontal_filter_nb,
+    linear_regression_bands_nb, price_oscillator_nb, force_index_nb, elder_force_index_nb,
+    chande_forecast_oscillator_nb, center_of_gravity_nb, linear_weighted_ma_nb, variable_ma_nb,
+    triangular_ma_nb, std_dev_channels_nb, ease_of_movement_value_nb,
+    relative_momentum_index_nb, qstick_indicator_nb, volatility_ratio_nb, market_facilitation_index_nb
+)
+
 __all__ = [
     # Momentum indicators
     "rsi", "macd", "ema", "sma", "stochastic",
@@ -214,4 +227,16 @@ __all__ = [
     "typical_price_bands", "weighted_close_bands", "acceleration_bands", "high_low_bands",
     "envelope_nb", "starc_bands_nb", "price_channel_bands_nb", "median_price_bands_nb",
     "typical_price_bands_nb", "weighted_close_bands_nb", "acceleration_bands_nb", "high_low_bands_nb",
+
+    # Composite & Specialty Indicators
+    "choppiness_index", "mcginley_dynamic", "kaufman_efficiency_ratio", "vertical_horizontal_filter",
+    "linear_regression_bands", "price_oscillator", "force_index", "elder_force_index",
+    "chande_forecast_oscillator", "center_of_gravity", "linear_weighted_ma", "variable_ma",
+    "triangular_ma", "std_dev_channels", "ease_of_movement_value",
+    "relative_momentum_index", "qstick_indicator", "volatility_ratio", "market_facilitation_index",
+    "choppiness_index_nb", "mcginley_dynamic_nb", "kaufman_efficiency_ratio_nb", "vertical_horizontal_filter_nb",
+    "linear_regression_bands_nb", "price_oscillator_nb", "force_index_nb", "elder_force_index_nb",
+    "chande_forecast_oscillator_nb", "center_of_gravity_nb", "linear_weighted_ma_nb", "variable_ma_nb",
+    "triangular_ma_nb", "std_dev_channels_nb", "ease_of_movement_value_nb",
+    "relative_momentum_index_nb", "qstick_indicator_nb", "volatility_ratio_nb", "market_facilitation_index_nb",
 ]
