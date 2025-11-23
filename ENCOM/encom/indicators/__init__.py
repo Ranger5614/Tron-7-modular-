@@ -66,6 +66,48 @@ from encom.indicators.price_transform import (
     avgprice_nb, medprice_nb, typprice_nb, wclprice_nb, hlc3_nb, ohlc4_nb, hl2_nb, hlcc4_nb
 )
 
+from encom.indicators.support_resistance import (
+    pivot_points, fibonacci_retracement, fibonacci_extension, swing_high_low, fractal, donchian_channel,
+    pivot_points_nb, fibonacci_retracement_nb, fibonacci_extension_nb, swing_high_low_nb, fractal_nb, donchian_channel_nb
+)
+
+from encom.indicators.advanced_momentum import (
+    trix, bop, apo, kst, dpo, fisher_transform, ao, ac,
+    trix_nb, bop_nb, apo_nb, kst_nb, dpo_nb, fisher_transform_nb, ao_nb, ac_nb
+)
+
+from encom.indicators.advanced_volatility import (
+    historical_volatility, ulcer_index, chaikin_volatility, natr, true_range, mass_index, price_channels,
+    historical_volatility_nb, ulcer_index_nb, chaikin_volatility_nb, natr_nb, true_range_nb, mass_index_nb, price_channels_nb
+)
+
+from encom.indicators.hilbert_transform import (
+    ht_trendline, ht_dcperiod, ht_dcphase, ht_phasor, ht_sine, ht_trendmode, ht_leadsine,
+    ht_trendline_nb, ht_dcperiod_nb, ht_dcphase_nb, ht_phasor_nb, ht_sine_nb, ht_trendmode_nb
+)
+
+from encom.indicators.pattern_recognition import (
+    engulfing_pattern, doji_pattern, hammer_pattern, morning_evening_star, three_soldiers_crows,
+    engulfing_pattern_nb, doji_pattern_nb, hammer_pattern_nb, morning_evening_star_nb, three_soldiers_crows_nb
+)
+
+from encom.indicators.market_profile import (
+    point_of_control, value_area, volume_profile,
+    point_of_control_nb, value_area_nb, volume_profile_nb
+)
+
+from encom.indicators.order_flow import (
+    delta_volume, cumulative_volume_delta, aggressive_ratio, volume_pace,
+    delta_volume_nb, cumulative_volume_delta_nb, aggressive_ratio_nb, volume_pace_nb
+)
+
+from encom.indicators.advanced_volume import (
+    volume_roc as volume_roc_adv, klinger_volume_oscillator, ease_of_movement,
+    negative_volume_index, positive_volume_index,
+    volume_roc_nb as volume_roc_adv_nb, klinger_volume_oscillator_nb, ease_of_movement_nb,
+    negative_volume_index_nb, positive_volume_index_nb
+)
+
 __all__ = [
     # Momentum indicators
     "rsi", "macd", "ema", "sma", "stochastic",
@@ -101,4 +143,36 @@ __all__ = [
     # Price Transform indicators
     "avgprice", "medprice", "typprice", "wclprice", "hlc3", "ohlc4", "hl2", "hlcc4",
     "avgprice_nb", "medprice_nb", "typprice_nb", "wclprice_nb", "hlc3_nb", "ohlc4_nb", "hl2_nb", "hlcc4_nb",
+
+    # Support/Resistance indicators
+    "pivot_points", "fibonacci_retracement", "fibonacci_extension", "swing_high_low", "fractal", "donchian_channel",
+    "pivot_points_nb", "fibonacci_retracement_nb", "fibonacci_extension_nb", "swing_high_low_nb", "fractal_nb", "donchian_channel_nb",
+
+    # Advanced Momentum indicators
+    "trix", "bop", "apo", "kst", "dpo", "fisher_transform", "ao", "ac",
+    "trix_nb", "bop_nb", "apo_nb", "kst_nb", "dpo_nb", "fisher_transform_nb", "ao_nb", "ac_nb",
+
+    # Advanced Volatility indicators
+    "historical_volatility", "ulcer_index", "chaikin_volatility", "natr", "true_range", "mass_index", "price_channels",
+    "historical_volatility_nb", "ulcer_index_nb", "chaikin_volatility_nb", "natr_nb", "true_range_nb", "mass_index_nb", "price_channels_nb",
+
+    # Hilbert Transform indicators (Cycle Analysis)
+    "ht_trendline", "ht_dcperiod", "ht_dcphase", "ht_phasor", "ht_sine", "ht_trendmode", "ht_leadsine",
+    "ht_trendline_nb", "ht_dcperiod_nb", "ht_dcphase_nb", "ht_phasor_nb", "ht_sine_nb", "ht_trendmode_nb",
+
+    # Pattern Recognition indicators
+    "engulfing_pattern", "doji_pattern", "hammer_pattern", "morning_evening_star", "three_soldiers_crows",
+    "engulfing_pattern_nb", "doji_pattern_nb", "hammer_pattern_nb", "morning_evening_star_nb", "three_soldiers_crows_nb",
+
+    # Market Profile indicators
+    "point_of_control", "value_area", "volume_profile",
+    "point_of_control_nb", "value_area_nb", "volume_profile_nb",
+
+    # Order Flow indicators
+    "delta_volume", "cumulative_volume_delta", "aggressive_ratio", "volume_pace",
+    "delta_volume_nb", "cumulative_volume_delta_nb", "aggressive_ratio_nb", "volume_pace_nb",
+
+    # Advanced Volume indicators
+    "volume_roc_adv", "klinger_volume_oscillator", "ease_of_movement", "negative_volume_index", "positive_volume_index",
+    "volume_roc_adv_nb", "klinger_volume_oscillator_nb", "ease_of_movement_nb", "negative_volume_index_nb", "positive_volume_index_nb",
 ]

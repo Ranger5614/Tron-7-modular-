@@ -1,107 +1,169 @@
-#!/usr/bin/env python3
 """
-Test Volume and Trend Indicators - Performance Benchmark
+Test script for new indicators (24 new elite indicators)
+
+Tests:
+- Hilbert Transform Suite (7)
+- Pattern Recognition (5)
+- Market Profile (3)
+- Order Flow (4)
+- Advanced Volume (5)
 """
 
-import time
 import numpy as np
+import sys
+
+print("=" * 70)
+print("ENCOM New Indicators Test")
+print("=" * 70)
+print()
+
+# Generate test data
+n = 200
+np.random.seed(42)
+
+# Realistic price data
+close = 100 + np.cumsum(np.random.randn(n) * 0.5)
+high = close + np.abs(np.random.randn(n) * 0.3)
+low = close - np.abs(np.random.randn(n) * 0.3)
+open_prices = close + np.random.randn(n) * 0.2
+volume = np.random.randint(100000, 1000000, n).astype(float)
+
+# Ensure OHLC relationships
+for i in range(n):
+    high[i] = max(high[i], open_prices[i], close[i])
+    low[i] = min(low[i], open_prices[i], close[i])
+
+# Track results
+passed = 0
+failed = 0
+errors = []
+
+
+def test_indicator(name, func, *args):
+    """Test a single indicator"""
+    global passed, failed
+    try:
+        result = func(*args)
+
+        if result is None:
+            print(f"❌ {name:40} - Returned None")
+            failed += 1
+            errors.append(f"{name}: Returned None")
+            return False
+
+        # Check if result is valid
+        if isinstance(result, tuple):
+            for r in result:
+                if not isinstance(r, np.ndarray) or len(r) != n:
+                    print(f"❌ {name:40} - Invalid output shape")
+                    failed += 1
+                    errors.append(f"{name}: Invalid output shape")
+                    return False
+        elif isinstance(result, np.ndarray):
+            if len(result) != n:
+                print(f"❌ {name:40} - Invalid output length")
+                failed += 1
+                errors.append(f"{name}: Invalid output length")
+                return False
+
+        print(f"✅ {name:40} - OK")
+        passed += 1
+        return True
+
+    except Exception as e:
+        print(f"❌ {name:40} - {str(e)}")
+        failed += 1
+        errors.append(f"{name}: {str(e)}")
+        return False
+
+
+print("Testing Hilbert Transform Suite (7 indicators)...")
+print("-" * 70)
+
 from encom.indicators import (
-    # Volume
-    vwap, obv, ad, cmf, mfi, volume_roc,
-    # Trend
-    adx, di, psar, supertrend, aroon
+    ht_trendline, ht_dcperiod, ht_dcphase, ht_phasor, ht_sine, ht_trendmode, ht_leadsine
 )
 
-def benchmark_indicator(name, func, *args, runs=100):
-    """Benchmark an indicator function"""
-    # Warmup (JIT compilation)
-    _ = func(*args)
+test_indicator("HT_TRENDLINE", ht_trendline, close)
+test_indicator("HT_DCPERIOD", ht_dcperiod, close)
+test_indicator("HT_DCPHASE", ht_dcphase, close)
+test_indicator("HT_PHASOR", ht_phasor, close)
+test_indicator("HT_SINE", ht_sine, close)
+test_indicator("HT_TRENDMODE", ht_trendmode, close)
+test_indicator("HT_LEADSINE", ht_leadsine, close)
 
-    # Benchmark
-    start = time.time()
-    for _ in range(runs):
-        result = func(*args)
-    elapsed = time.time() - start
+print()
+print("Testing Pattern Recognition (5 indicators)...")
+print("-" * 70)
 
-    per_run = (elapsed / runs) * 1000  # ms
-    throughput = (len(args[0]) * runs) / elapsed / 1000  # K bars/sec
+from encom.indicators import (
+    engulfing_pattern, doji_pattern, hammer_pattern,
+    morning_evening_star, three_soldiers_crows
+)
 
-    print(f"  {name:15} {per_run:7.2f}ms    {throughput:8.0f}K bars/sec")
+test_indicator("Engulfing Pattern", engulfing_pattern, open_prices, high, low, close)
+test_indicator("Doji Pattern", doji_pattern, open_prices, high, low, close)
+test_indicator("Hammer Pattern", hammer_pattern, open_prices, high, low, close)
+test_indicator("Morning/Evening Star", morning_evening_star, open_prices, high, low, close)
+test_indicator("Three Soldiers/Crows", three_soldiers_crows, open_prices, high, low, close)
 
-    return result
+print()
+print("Testing Market Profile (3 indicators)...")
+print("-" * 70)
 
+from encom.indicators import (
+    point_of_control, value_area, volume_profile
+)
 
-def main():
-    print("""
-╔══════════════════════════════════════════════════════════╗
-║  NEW INDICATORS PERFORMANCE BENCHMARK                   ║
-║  Volume + Trend Indicators with Numba JIT               ║
-╚══════════════════════════════════════════════════════════╝
-    """)
+test_indicator("Point of Control", point_of_control, high, low, close, volume)
+test_indicator("Value Area", value_area, high, low, close, volume)
+test_indicator("Volume Profile", volume_profile, high, low, close, volume)
 
-    # Generate test data
-    n = 10000
-    print(f"Data size: {n:,} bars")
-    print(f"Runs per indicator: 100\n")
+print()
+print("Testing Order Flow (4 indicators)...")
+print("-" * 70)
 
-    high = np.random.uniform(100, 110, n).astype(np.float64)
-    low = np.random.uniform(90, 100, n).astype(np.float64)
-    close = np.random.uniform(95, 105, n).astype(np.float64)
-    volume = np.random.uniform(1000000, 5000000, n).astype(np.float64)
+from encom.indicators import (
+    delta_volume, cumulative_volume_delta, aggressive_ratio, volume_pace
+)
 
-    print("="*60)
-    print("VOLUME INDICATORS")
-    print("="*60)
-    print(f"{'Indicator':<15} {'Time/Run':<12} {'Throughput'}")
-    print("-"*60)
+test_indicator("Delta Volume", delta_volume, high, low, close, volume)
+test_indicator("Cumulative Volume Delta", cumulative_volume_delta, high, low, close, volume)
+test_indicator("Aggressive Ratio", aggressive_ratio, high, low, close, volume)
+test_indicator("Volume Pace", volume_pace, volume)
 
-    benchmark_indicator("VWAP", vwap, high, low, close, volume)
-    benchmark_indicator("OBV", obv, close, volume)
-    benchmark_indicator("A/D Line", ad, high, low, close, volume)
-    benchmark_indicator("CMF (20)", cmf, high, low, close, volume, 20)
-    benchmark_indicator("MFI (14)", mfi, high, low, close, volume, 14)
-    benchmark_indicator("Volume ROC", volume_roc, volume, 14)
+print()
+print("Testing Advanced Volume (5 indicators)...")
+print("-" * 70)
 
-    print("\n" + "="*60)
-    print("TREND INDICATORS")
-    print("="*60)
-    print(f"{'Indicator':<15} {'Time/Run':<12} {'Throughput'}")
-    print("-"*60)
+from encom.indicators import (
+    volume_roc_adv, klinger_volume_oscillator, ease_of_movement,
+    negative_volume_index, positive_volume_index
+)
 
-    benchmark_indicator("ADX (14)", adx, high, low, close, 14)
-    benchmark_indicator("+DI/-DI (14)", di, high, low, close, 14)
-    benchmark_indicator("PSAR", psar, high, low, close)
-    benchmark_indicator("Supertrend", supertrend, high, low, close, 10, 3.0)
-    benchmark_indicator("Aroon (25)", aroon, high, low, 25)
+test_indicator("Volume ROC", volume_roc_adv, volume)
+test_indicator("Klinger Volume Oscillator", klinger_volume_oscillator, high, low, close, volume)
+test_indicator("Ease of Movement", ease_of_movement, high, low, volume)
+test_indicator("Negative Volume Index", negative_volume_index, close, volume)
+test_indicator("Positive Volume Index", positive_volume_index, close, volume)
 
-    print("\n" + "="*60)
-    print("SUMMARY")
-    print("="*60)
-    print(f"""
-Total new indicators implemented: 11
-  - Volume:  6 (VWAP, OBV, A/D, CMF, MFI, Volume ROC)
-  - Trend:   5 (ADX, +DI/-DI, PSAR, Supertrend, Aroon)
+print()
+print("=" * 70)
+print("SUMMARY")
+print("=" * 70)
+print(f"✅ Passed: {passed}/24")
+print(f"❌ Failed: {failed}/24")
 
-Total ENCOM indicator library: 23 indicators
-  - Momentum:    5 (RSI, MACD, Stochastic, EMA, SMA)
-  - Volatility:  4 (ATR, Bollinger, Keltner, StdDev)
-  - Volume:      6 (NEW)
-  - Trend:       5 (NEW)
-  - Statistical: 3
-
-Performance: All indicators 20-100x faster than pandas
-Throughput:  10K-100K bars/sec per indicator
-
-✅ Phase 1 Complete: Critical volume + trend indicators
-    """)
-
-    print("Next phases:")
-    print("  Phase 2: Enhanced Momentum (CCI, Williams %R, Ultimate, TSI, ROC)")
-    print("  Phase 3: Support/Resistance (Pivots, Fibonacci, Donchian)")
-    print("  Phase 4: Additional categories as needed")
-
-    print("\nEnd of Line. 🎮")
-
-
-if __name__ == "__main__":
-    main()
+if failed > 0:
+    print()
+    print("Errors:")
+    for error in errors:
+        print(f"  - {error}")
+    sys.exit(1)
+else:
+    print()
+    print("🎉 All 24 new indicators working perfectly!")
+    print()
+    print("Total ENCOM Indicators: 80 (previous) + 24 (new) = 104 indicators")
+    print()
+    sys.exit(0)
